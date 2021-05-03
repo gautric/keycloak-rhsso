@@ -370,9 +370,6 @@
 							"script": {
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"",
-									"postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
-									"",
 									""
 								],
 								"type": "text/javascript"
