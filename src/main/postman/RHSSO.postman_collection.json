@@ -240,6 +240,51 @@
 						"method": "GET",
 						"header": [],
 						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users",
+								"{{user_id}}",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User {{user_id}} Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}",
 							"host": [
 								"{{server}}"
