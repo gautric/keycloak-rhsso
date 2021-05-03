@@ -79,13 +79,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{   \n    \"firstName\":\"{{$randomFirstName}}\",\n    \"lastName\":\"{{$randomLastName}}\",\n    \"email\":\"{{username}}_{{userRandomId}}@example.com\", \n    \"enabled\":\"true\", \n    \"username\":\"{{username}}_{{userRandomId}}\"\n}",
@@ -126,13 +131,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/count",
 							"host": [
@@ -261,13 +271,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}",
 							"host": [
@@ -308,13 +323,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients",
 							"host": [
@@ -349,13 +369,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"clientId\": \"{{clientId}}\",\n    \"rootUrl\": \"http://example.com:8080\",\n    \"adminUrl\": \"http://example.com:8080\",\n    \"baseUrl\": \"/js-console\",\n    \"surrogateAuthRequired\": false,\n    \"enabled\": true,\n    \"alwaysDisplayInConsole\": false,\n    \"clientAuthenticatorType\": \"client-secret\",\n    \"redirectUris\": [\n        \"/js-console/\"\n    ],\n    \"webOrigins\": [\n        \"http://example.com:8080/js-console\"\n    ],\n    \"notBefore\": 0,\n    \"bearerOnly\": false,\n    \"consentRequired\": false,\n    \"standardFlowEnabled\": true,\n    \"implicitFlowEnabled\": false,\n    \"directAccessGrantsEnabled\": false,\n    \"serviceAccountsEnabled\": false,\n    \"publicClient\": true,\n    \"frontchannelLogout\": false,\n    \"protocol\": \"openid-connect\",\n    \"attributes\": {\n        \"saml.assertion.signature\": \"false\",\n        \"saml.force.post.binding\": \"false\",\n        \"saml.multivalued.roles\": \"false\",\n        \"saml.encrypt\": \"false\",\n        \"saml.server.signature\": \"false\",\n        \"saml.server.signature.keyinfo.ext\": \"false\",\n        \"exclude.session.state.from.auth.response\": \"false\",\n        \"saml_force_name_id_format\": \"false\",\n        \"saml.client.signature\": \"false\",\n        \"tls.client.certificate.bound.access.tokens\": \"false\",\n        \"saml.authnstatement\": \"false\",\n        \"display.on.consent.screen\": \"false\",\n        \"saml.onetimeuse.condition\": \"false\"\n    },\n    \"authenticationFlowBindingOverrides\": {},\n    \"fullScopeAllowed\": true,\n    \"nodeReRegistrationTimeout\": -1,\n    \"protocolMappers\": [\n        {\n            \"name\": \"Group\",\n            \"protocol\": \"openid-connect\",\n            \"protocolMapper\": \"oidc-group-membership-mapper\",\n            \"consentRequired\": false,\n            \"config\": {\n                \"full.path\": \"true\",\n                \"id.token.claim\": \"true\",\n                \"access.token.claim\": \"true\",\n                \"claim.name\": \"group\",\n                \"userinfo.token.claim\": \"true\"\n            }\n        }\n    ],\n    \"defaultClientScopes\": [\n        \"web-origins\",\n        \"role_list\",\n        \"profile\",\n        \"roles\",\n        \"email\"\n    ],\n    \"optionalClientScopes\": [\n        \"address\",\n        \"phone\",\n        \"offline_access\",\n        \"microprofile-jwt\"\n    ],\n    \"access\": {\n        \"view\": true,\n        \"configure\": true,\n        \"manage\": true\n    }\n}",
@@ -399,13 +424,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients?clientId={{clientId}}&search=false",
 							"host": [
@@ -450,13 +480,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}",
 							"host": [
@@ -492,13 +527,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}",
 							"host": [
@@ -522,6 +562,52 @@
 			"name": "Group Managment",
 			"item": [
 				{
+					"name": "Get Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add Group",
 					"event": [
 						{
@@ -541,7 +627,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									"pm.collectionVariables.set(\"groupRandomId\", Math.floor(Math.random() * 1000));",
 									""
 								],
 								"type": "text/javascript"
@@ -549,13 +635,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "    {\n        \"name\": \"group{{groupRandomId}}\",\n        \"path\": \"/group{{groupRandomId}}\",\n        \"subGroups\": []\n    }",
@@ -582,7 +673,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Groups",
+					"name": "Get Group by name",
 					"event": [
 						{
 							"listen": "test",
@@ -590,8 +681,7 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-									"",
+									"pm.collectionVariables.set(\"group_id\", jsonData[0].id);",
 									""
 								],
 								"type": "text/javascript"
@@ -599,15 +689,20 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups?search={{groupRandomId}}",
 							"host": [
 								"{{server}}"
 							],
@@ -617,6 +712,80 @@
 								"realms",
 								"{{realm_target}}",
 								"groups"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{groupRandomId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User To Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"realm\": \"{{realm_target}}\",\n    \"userId\": \"{{user_id}}\",\n    \"groupId\": \"{{group_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users",
+								"{{user_id}}",
+								"groups",
+								"{{group_id}}"
 							]
 						}
 					},
@@ -650,13 +819,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
 							"host": [
@@ -677,7 +851,7 @@
 					"response": []
 				},
 				{
-					"name": "Add User To Group",
+					"name": "Delete Group",
 					"event": [
 						{
 							"listen": "test",
@@ -696,7 +870,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									"pm.collectionVariables.set(\"groupRandomId\", Math.floor(Math.random() * 1000));",
 									""
 								],
 								"type": "text/javascript"
@@ -704,16 +878,21 @@
 						}
 					],
 					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"realm\": \"{{realm_target}}\",\n    \"userId\": \"{{user_id}}\",\n    \"groupId\": \"{{group_id}}\"\n}",
+							"raw": "    {\n        \"name\": \"group{{groupRandomId}}\",\n        \"path\": \"/group{{groupRandomId}}\",\n        \"subGroups\": []\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -721,7 +900,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups/{{group_id}}",
 							"host": [
 								"{{server}}"
 							],
@@ -730,57 +909,8 @@
 								"admin",
 								"realms",
 								"{{realm_target}}",
-								"users",
-								"{{user_id}}",
 								"groups",
 								"{{group_id}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Group by name",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"",
-									"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
-						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups?search={{groupRandomId}}",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"auth",
-								"admin",
-								"realms",
-								"{{realm_target}}",
-								"groups"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "{{groupRandomId}}"
-								}
 							]
 						}
 					},
@@ -809,13 +939,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
 							"host": [
@@ -862,13 +997,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "    {\n        \"name\": \"role_client_{{roleRandomId}}\",\n        \"clientRole\": true\n    }",
@@ -923,13 +1063,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
 							"host": [
@@ -976,13 +1121,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": true\n    }\n]",
@@ -1030,13 +1180,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles",
 							"host": [
@@ -1081,13 +1236,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "    {\n        \"name\": \"role_realm_{{roleRandomId}}\",\n        \"clientRole\": false\n    }",
@@ -1138,13 +1298,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles?seach=role_client_{{roleRandomId}}",
 							"host": [
@@ -1195,13 +1360,18 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": false\n    }\n]",
@@ -1248,13 +1418,11 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -1300,6 +1468,9 @@
 		{
 			"name": "Get OIDC Conf",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -1321,6 +1492,9 @@
 		{
 			"name": "Get Keys",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -1360,12 +1534,7 @@
 					"type": "noauth"
 				},
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
@@ -1512,6 +1681,14 @@
 		},
 		{
 			"key": "userRandomId",
+			"value": ""
+		},
+		{
+			"key": "group_id",
+			"value": ""
+		},
+		{
+			"key": "groupRandomId",
 			"value": ""
 		}
 	]
