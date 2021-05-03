@@ -101,7 +101,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/example/users",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users",
 							"host": [
 								"{{server}}"
 							],
@@ -109,7 +109,7 @@
 								"auth",
 								"admin",
 								"realms",
-								"example",
+								"{{realm_target}}",
 								"users"
 							]
 						}
@@ -171,7 +171,10 @@
 									"",
 									"pm.collectionVariables.set(\"user_id\", jsonData[0].id);",
 									"",
-									""
+									"",
+									"console.info(pm.collectionVariables.get(\"user_id\"));",
+									"",
+									"console.info(pm.variables.get(\"user_id\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -221,6 +224,15 @@
 								"exec": [
 									"//var jsonData = JSON.parse(responseBody);",
 									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(pm.variables.get(\"user_id\"));"
 								],
 								"type": "text/javascript"
 							}
@@ -516,7 +528,6 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
 									"",
 									""
 								],
@@ -976,7 +987,7 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"",
 									"if(jsonData.length > 0) {",
-									"    postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"    pm.collectionVariables.set(\"role_id\", jsonData[0].id);",
 									"} else {",
 									"    console.warn(\"No Role for client\")",
 									"}",
@@ -1100,8 +1111,8 @@
 									"{",
 									"    if(jsonData[i].name == 'role_client_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
 									"    {",
-									"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
-									"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
+									"        pm.collectionVariables.set(\"role_id\", jsonData[i].id);",
+									"        pm.collectionVariables.set(\"role_name\", jsonData[i].name);",
 									"    }",
 									"}",
 									"",
@@ -1220,7 +1231,7 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"pm.collectionVariables.set(\"role_id\", jsonData[0].id);",
 									"",
 									""
 								],
@@ -1337,8 +1348,8 @@
 									"{",
 									"    if(jsonData[i].name == 'role_realm_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
 									"    {",
-									"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
-									"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
+									"        pm.collectionVariables.set(\"role_id\", jsonData[i].id);",
+									"        pm.collectionVariables.set(\"role_name\", jsonData[i].name);",
 									"    }",
 									"}"
 								],
@@ -1571,8 +1582,8 @@
 					"script": {
 						"exec": [
 							"var jsonData = JSON.parse(responseBody);",
-							"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
-							"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);"
+							"pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);",
+							"pm.collectionVariables.set(\"access_token\", jsonData.access_token);"
 						],
 						"type": "text/javascript"
 					}
@@ -1627,9 +1638,6 @@
 			"response": []
 		}
 	],
-	"auth": {
-		"type": "bearer"
-	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -1709,18 +1717,6 @@
 	],
 	"variable": [
 		{
-			"key": "access_token",
-			"value": ""
-		},
-		{
-			"key": "toto",
-			"value": ""
-		},
-		{
-			"key": "user_id",
-			"value": ""
-		},
-		{
 			"key": "api_user",
 			"value": "admin"
 		},
@@ -1729,7 +1725,15 @@
 			"value": "admin123_"
 		},
 		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
 			"key": "userRandomId",
+			"value": ""
+		},
+		{
+			"key": "client_id",
 			"value": ""
 		},
 		{
@@ -1741,7 +1745,11 @@
 			"value": ""
 		},
 		{
-			"key": "client_id",
+			"key": "role_id",
+			"value": ""
+		},
+		{
+			"key": "role_name",
 			"value": ""
 		}
 	]
