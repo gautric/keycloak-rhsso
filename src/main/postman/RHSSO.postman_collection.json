@@ -16,10 +16,7 @@
 							"script": {
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"",
-									"pm.collectionVariables.set(\"user_id\", jsonData[0].id);",
-									"",
-									"//console.info(\"{{user_id}} : \" + pm.collectionVariables.get(\"user_id\"));"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -61,8 +58,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"//var jsonData = JSON.parse(responseBody);",
-									"",
 									"pm.test(\"Status code is 201\", () => {",
 									"  pm.response.to.have.status(201);",
 									"});",
@@ -1619,9 +1614,7 @@
 					"var time = new Date().getTime();",
 					"var last = postman.getEnvironmentVariable(\"last_request_time\");",
 					"",
-					"console.debug(\" > \" + (time-last));",
-					"",
-					"if(last == null || time - last > 45*1000)",
+					"console.warn((time-last))",
 					"    ",
 					"    pm.sendRequest({",
 					"        url: token_endpoint,",
