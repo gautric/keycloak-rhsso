@@ -17,22 +17,27 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
+									"pm.collectionVariables.set(\"user_id\", jsonData[0].id);",
 									"",
-									""
+									"//console.info(\"{{user_id}} : \" + pm.collectionVariables.get(\"user_id\"));"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{access_token}}"
-							}
-						],
+						"header": [],
 						"url": {
 							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users",
 							"host": [
@@ -66,7 +71,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setEnvironmentVariable(\"userRandomId\", Math.floor(Math.random() * 1000));",
+									"pm.collectionVariables.set(\"userRandomId\", Math.floor(Math.random() * 1000));",
 									""
 								],
 								"type": "text/javascript"
@@ -146,6 +151,58 @@
 					"response": []
 				},
 				{
+					"name": "Get Users by {{username}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.collectionVariables.set(\"user_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users?username={{username}}_{{userRandomId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{username}}_{{userRandomId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get User {{user_id}}",
 					"event": [
 						{
@@ -160,7 +217,51 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User {{user_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
@@ -183,16 +284,23 @@
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Client Managment",
+			"item": [
 				{
-					"name": "Get Users by {{username}}",
+					"name": "Get Clients",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
+									"",
 									"postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
+									"",
 									""
 								],
 								"type": "text/javascript"
@@ -208,7 +316,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users?username={{username}}_{{userRandomId}}",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients",
 							"host": [
 								"{{server}}"
 							],
@@ -217,13 +325,906 @@
 								"admin",
 								"realms",
 								"{{realm_target}}",
-								"users"
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"{{clientId}}\",\n    \"rootUrl\": \"http://example.com:8080\",\n    \"adminUrl\": \"http://example.com:8080\",\n    \"baseUrl\": \"/js-console\",\n    \"surrogateAuthRequired\": false,\n    \"enabled\": true,\n    \"alwaysDisplayInConsole\": false,\n    \"clientAuthenticatorType\": \"client-secret\",\n    \"redirectUris\": [\n        \"/js-console/\"\n    ],\n    \"webOrigins\": [\n        \"http://example.com:8080/js-console\"\n    ],\n    \"notBefore\": 0,\n    \"bearerOnly\": false,\n    \"consentRequired\": false,\n    \"standardFlowEnabled\": true,\n    \"implicitFlowEnabled\": false,\n    \"directAccessGrantsEnabled\": false,\n    \"serviceAccountsEnabled\": false,\n    \"publicClient\": true,\n    \"frontchannelLogout\": false,\n    \"protocol\": \"openid-connect\",\n    \"attributes\": {\n        \"saml.assertion.signature\": \"false\",\n        \"saml.force.post.binding\": \"false\",\n        \"saml.multivalued.roles\": \"false\",\n        \"saml.encrypt\": \"false\",\n        \"saml.server.signature\": \"false\",\n        \"saml.server.signature.keyinfo.ext\": \"false\",\n        \"exclude.session.state.from.auth.response\": \"false\",\n        \"saml_force_name_id_format\": \"false\",\n        \"saml.client.signature\": \"false\",\n        \"tls.client.certificate.bound.access.tokens\": \"false\",\n        \"saml.authnstatement\": \"false\",\n        \"display.on.consent.screen\": \"false\",\n        \"saml.onetimeuse.condition\": \"false\"\n    },\n    \"authenticationFlowBindingOverrides\": {},\n    \"fullScopeAllowed\": true,\n    \"nodeReRegistrationTimeout\": -1,\n    \"protocolMappers\": [\n        {\n            \"name\": \"Group\",\n            \"protocol\": \"openid-connect\",\n            \"protocolMapper\": \"oidc-group-membership-mapper\",\n            \"consentRequired\": false,\n            \"config\": {\n                \"full.path\": \"true\",\n                \"id.token.claim\": \"true\",\n                \"access.token.claim\": \"true\",\n                \"claim.name\": \"group\",\n                \"userinfo.token.claim\": \"true\"\n            }\n        }\n    ],\n    \"defaultClientScopes\": [\n        \"web-origins\",\n        \"role_list\",\n        \"profile\",\n        \"roles\",\n        \"email\"\n    ],\n    \"optionalClientScopes\": [\n        \"address\",\n        \"phone\",\n        \"offline_access\",\n        \"microprofile-jwt\"\n    ],\n    \"access\": {\n        \"view\": true,\n        \"configure\": true,\n        \"manage\": true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client {{clientId}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"client_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients?clientId={{clientId}}&search=false",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients"
 							],
 							"query": [
 								{
-									"key": "username",
-									"value": "{{username}}_{{userRandomId}}"
+									"key": "clientId",
+									"value": "{{clientId}}"
+								},
+								{
+									"key": "search",
+									"value": "false"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Client {{client_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Client {{client_id}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group Managment",
+			"item": [
+				{
+					"name": "Add Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"group{{groupRandomId}}\",\n        \"path\": \"/group{{groupRandomId}}\",\n        \"subGroups\": []\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Groups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User from Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users",
+								"{{user_id}}",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User To Group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"realm\": \"{{realm_target}}\",\n    \"userId\": \"{{user_id}}\",\n    \"groupId\": \"{{group_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"users",
+								"{{user_id}}",
+								"groups",
+								"{{group_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups?search={{groupRandomId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "{{groupRandomId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role Managment",
+			"item": [
+				{
+					"name": "Get Roles for Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients",
+								"{{client_id}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Role for Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"role_client_{{roleRandomId}}\",\n        \"clientRole\": true\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients",
+								"{{client_id}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role for Client by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"var list = (jsonData).length;",
+									"",
+									"for (var i = 0; i < list; i++) ",
+									"{",
+									"    if(jsonData[i].name == 'role_client_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
+									"    {",
+									"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
+									"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
+									"    }",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"clients",
+								"{{client_id}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add client-level roles to the user role mapping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": true\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups/{{group_id}}/role-mappings/clients/{{client_id}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups",
+								"{{group_id}}",
+								"role-mappings",
+								"clients",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Roles for Realm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Role for Realm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"role_realm_{{roleRandomId}}\",\n        \"clientRole\": false\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role for Realm by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"var list = (jsonData).length;",
+									"",
+									"for (var i = 0; i < list; i++) ",
+									"{",
+									"    if(jsonData[i].name == 'role_realm_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
+									"    {",
+									"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
+									"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles?seach=role_client_{{roleRandomId}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"roles"
+							],
+							"query": [
+								{
+									"key": "seach",
+									"value": "role_client_{{roleRandomId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add realm-level role mappings to the user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var jsonData = JSON.parse(responseBody);",
+									"",
+									"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": false\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups/{{group_id}}/role-mappings/realm",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}",
+								"groups",
+								"{{group_id}}",
+								"role-mappings",
+								"realm"
 							]
 						}
 					},
@@ -355,6 +1356,9 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -372,12 +1376,12 @@
 						},
 						{
 							"key": "username",
-							"value": "{{test_user}}",
+							"value": "{{api_user}}",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "{{test_password}}",
+							"value": "{{api_password}}",
 							"type": "text"
 						},
 						{
@@ -399,894 +1403,6 @@
 						"protocol",
 						"openid-connect",
 						"token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Clients",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Client {{client_id}}",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients",
-						"{{client_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Client",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"user_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"clientId\": \"{{clientId}}\",\n    \"rootUrl\": \"http://example.com:8080\",\n    \"adminUrl\": \"http://example.com:8080\",\n    \"baseUrl\": \"/js-console\",\n    \"surrogateAuthRequired\": false,\n    \"enabled\": true,\n    \"alwaysDisplayInConsole\": false,\n    \"clientAuthenticatorType\": \"client-secret\",\n    \"redirectUris\": [\n        \"/js-console/\"\n    ],\n    \"webOrigins\": [\n        \"http://example.com:8080/js-console\"\n    ],\n    \"notBefore\": 0,\n    \"bearerOnly\": false,\n    \"consentRequired\": false,\n    \"standardFlowEnabled\": true,\n    \"implicitFlowEnabled\": false,\n    \"directAccessGrantsEnabled\": false,\n    \"serviceAccountsEnabled\": false,\n    \"publicClient\": true,\n    \"frontchannelLogout\": false,\n    \"protocol\": \"openid-connect\",\n    \"attributes\": {\n        \"saml.assertion.signature\": \"false\",\n        \"saml.force.post.binding\": \"false\",\n        \"saml.multivalued.roles\": \"false\",\n        \"saml.encrypt\": \"false\",\n        \"saml.server.signature\": \"false\",\n        \"saml.server.signature.keyinfo.ext\": \"false\",\n        \"exclude.session.state.from.auth.response\": \"false\",\n        \"saml_force_name_id_format\": \"false\",\n        \"saml.client.signature\": \"false\",\n        \"tls.client.certificate.bound.access.tokens\": \"false\",\n        \"saml.authnstatement\": \"false\",\n        \"display.on.consent.screen\": \"false\",\n        \"saml.onetimeuse.condition\": \"false\"\n    },\n    \"authenticationFlowBindingOverrides\": {},\n    \"fullScopeAllowed\": true,\n    \"nodeReRegistrationTimeout\": -1,\n    \"protocolMappers\": [\n        {\n            \"name\": \"Group\",\n            \"protocol\": \"openid-connect\",\n            \"protocolMapper\": \"oidc-group-membership-mapper\",\n            \"consentRequired\": false,\n            \"config\": {\n                \"full.path\": \"true\",\n                \"id.token.claim\": \"true\",\n                \"access.token.claim\": \"true\",\n                \"claim.name\": \"group\",\n                \"userinfo.token.claim\": \"true\"\n            }\n        }\n    ],\n    \"defaultClientScopes\": [\n        \"web-origins\",\n        \"role_list\",\n        \"profile\",\n        \"roles\",\n        \"email\"\n    ],\n    \"optionalClientScopes\": [\n        \"address\",\n        \"phone\",\n        \"offline_access\",\n        \"microprofile-jwt\"\n    ],\n    \"access\": {\n        \"view\": true,\n        \"configure\": true,\n        \"manage\": true\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Client {{clientId}}",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"client_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients?clientId={{clientId}}&search=false",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients"
-					],
-					"query": [
-						{
-							"key": "clientId",
-							"value": "{{clientId}}"
-						},
-						{
-							"key": "search",
-							"value": "false"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Groups",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"groups"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Group",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "    {\n        \"name\": \"group{{groupRandomId}}\",\n        \"path\": \"/group{{groupRandomId}}\",\n        \"subGroups\": []\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"groups"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add User To Group",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"realm\": \"{{realm_target}}\",\n    \"userId\": \"{{user_id}}\",\n    \"groupId\": \"{{group_id}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"users",
-						"{{user_id}}",
-						"groups",
-						"{{group_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete User from Group",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"groupRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups/{{group_id}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"users",
-						"{{user_id}}",
-						"groups",
-						"{{group_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Group by name",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups?search={{groupRandomId}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"groups"
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "{{groupRandomId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Roles for Client",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients",
-						"{{client_id}}",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Role for Client",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "    {\n        \"name\": \"role_client_{{roleRandomId}}\",\n        \"clientRole\": true\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients",
-						"{{client_id}}",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Role for Client by name",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"var list = (jsonData).length;",
-							"",
-							"for (var i = 0; i < list; i++) ",
-							"{",
-							"    if(jsonData[i].name == 'role_client_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
-							"    {",
-							"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
-							"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
-							"    }",
-							"}",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/clients/{{client_id}}/roles",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"clients",
-						"{{client_id}}",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add client-level roles to the user role mapping",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"//postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": true\n    }\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups/{{group_id}}/role-mappings/clients/{{client_id}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"groups",
-						"{{group_id}}",
-						"role-mappings",
-						"clients",
-						"{{client_id}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Roles for Realm",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Role for Realm",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "    {\n        \"name\": \"role_realm_{{roleRandomId}}\",\n        \"clientRole\": false\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"roles"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Role for Realm by name",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = JSON.parse(responseBody);",
-							"",
-							"var list = (jsonData).length;",
-							"",
-							"for (var i = 0; i < list; i++) ",
-							"{",
-							"    if(jsonData[i].name == 'role_realm_'+ postman.getEnvironmentVariable(\"roleRandomId\"))",
-							"    {",
-							"        postman.setEnvironmentVariable(\"role_id\", jsonData[i].id);",
-							"        postman.setEnvironmentVariable(\"role_name\", jsonData[i].name);",
-							"    }",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/roles?seach=role_client_{{roleRandomId}}",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"roles"
-					],
-					"query": [
-						{
-							"key": "seach",
-							"value": "role_client_{{roleRandomId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add realm-level role mappings to the user",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"//var jsonData = JSON.parse(responseBody);",
-							"",
-							"//postman.setEnvironmentVariable(\"group_id\", jsonData[0].id);",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"postman.setEnvironmentVariable(\"roleRandomId\", Math.floor(Math.random() * 1000));",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{access_token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[\n    {\n        \"id\" : \"{{role_id}}\",\n        \"name\": \"{{role_name}}\",\n        \"clientRole\": false\n    }\n]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{server}}/auth/admin/realms/{{realm_target}}/groups/{{group_id}}/role-mappings/realm",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"auth",
-						"admin",
-						"realms",
-						"{{realm_target}}",
-						"groups",
-						"{{group_id}}",
-						"role-mappings",
-						"realm"
 					]
 				}
 			},
@@ -1322,8 +1438,8 @@
 					"",
 					"var details = {",
 					"    \"client_id\": postman.getEnvironmentVariable(\"realm\"),",
-					"    \"username\": postman.getEnvironmentVariable(\"test_user\"),",
-					"    \"password\": postman.getEnvironmentVariable(\"test_password\"),",
+					"    \"username\": postman.getEnvironmentVariable(\"api_user\"),",
+					"    \"password\": postman.getEnvironmentVariable(\"api_password\"),",
 					"    \"grant_type\": \"password\"  ",
 					"}",
 					"",
@@ -1337,7 +1453,6 @@
 					"  formBody.push(encodedKey + \"=\" + encodedValue);",
 					"}",
 					"",
-					"//formBody = formBody.join(\"&\");",
 					"pm.sendRequest({",
 					"    url: token_endpoint,",
 					"    method: 'POST',",
@@ -1348,8 +1463,8 @@
 					"        mode: 'urlencoded',",
 					"        urlencoded: [",
 					"            {key: \"client_id\", value: \"admin-cli\", disabled: false},",
-					"            {key: \"username\", value: pm.environment.get(\"test_user\"), disabled: false},",
-					"            {key: \"password\", value: pm.environment.get(\"test_password\"), disabled: false},",
+					"            {key: \"username\", value: pm.collectionVariables.get(\"api_user\"), disabled: false},",
+					"            {key: \"password\", value: pm.collectionVariables.get(\"api_password\"), disabled: false},",
 					"            {key: \"grant_type\", value: \"password\", disabled: false}",
 					"        ]",
 					"    }",
@@ -1357,7 +1472,7 @@
 					"    const jsonResponse = response.json();",
 					"    console.log(jsonResponse);",
 					"   // pm.collectionVariables.set(\"access_token\", jsonResponse.access_token);",
-					"    postman.setEnvironmentVariable(\"access_token\", jsonResponse.access_token);",
+					"    pm.variables.set(\"access_token\", jsonResponse.access_token);",
 					"   // console.log(pm.collectionVariables.get(\"access_token\"));",
 					"}); ",
 					""
@@ -1381,6 +1496,22 @@
 		},
 		{
 			"key": "toto",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "api_user",
+			"value": "admin"
+		},
+		{
+			"key": "api_password",
+			"value": "admin123_"
+		},
+		{
+			"key": "userRandomId",
 			"value": ""
 		}
 	]
