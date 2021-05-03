@@ -240,7 +240,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}",
 							"host": [
 								"{{server}}"
 							],
@@ -250,8 +250,7 @@
 								"realms",
 								"{{realm_target}}",
 								"users",
-								"{{user_id}}",
-								"groups"
+								"{{user_id}}"
 							]
 						}
 					},
@@ -285,7 +284,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}",
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}/users/{{user_id}}/groups",
 							"host": [
 								"{{server}}"
 							],
@@ -295,7 +294,8 @@
 								"realms",
 								"{{realm_target}}",
 								"users",
-								"{{user_id}}"
+								"{{user_id}}",
+								"groups"
 							]
 						}
 					},
