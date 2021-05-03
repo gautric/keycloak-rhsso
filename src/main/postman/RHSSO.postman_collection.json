@@ -460,7 +460,7 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"postman.setEnvironmentVariable(\"client_id\", jsonData[0].id);",
+									"pm.collectionVariables.set(\"client_id\", jsonData[0].id);",
 									"",
 									""
 								],
@@ -975,7 +975,11 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"if(jsonData.length > 0) {",
+									"    postman.setEnvironmentVariable(\"role_id\", jsonData[0].id);",
+									"} else {",
+									"    console.warn(\"No Role for client\")",
+									"}",
 									"",
 									""
 								],
@@ -1734,6 +1738,10 @@
 		},
 		{
 			"key": "groupRandomId",
+			"value": ""
+		},
+		{
+			"key": "client_id",
 			"value": ""
 		}
 	]
