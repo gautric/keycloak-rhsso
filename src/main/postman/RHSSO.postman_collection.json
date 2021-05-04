@@ -663,8 +663,12 @@
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"pm.collectionVariables.set(\"group_id\", jsonData[0].id);",
 									"",
+									"if(jsonData.length > 0) {",
+									"    pm.collectionVariables.set(\"group_id\", jsonData[0].id);",
+									"} else {",
+									"    console.warn(\"No Group\")",
+									"}",
 									""
 								],
 								"type": "text/javascript"
