@@ -1634,8 +1634,7 @@
 					"",
 					"console.warn((time-last))",
 					"",
-					"if( last == NaN || (time - last) > 45*1000 )    ",
-					"",
+					"if( last == NaN || (time - last) > 45*1000 ) {",
 					"    pm.sendRequest({",
 					"        url: token_endpoint,",
 					"        method: 'POST',",
@@ -1660,7 +1659,7 @@
 					"        pm.environment.set(\"last_request_time\", time);",
 					"        pm.environment.set(\"access_token\", jsonResponse.access_token);",
 					"    }); ",
-					""
+					"}"
 				]
 			}
 		},
