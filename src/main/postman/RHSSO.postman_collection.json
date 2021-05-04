@@ -16,7 +16,25 @@
 							"script": {
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									""
+									"",
+									"let template =",
+									"    `",
+									" <table bgcolor=\"#FFFFFF\">",
+									"        <tr>",
+									"            <th>Username</th>",
+									"            <th>Id</th>     ",
+									"        </tr>",
+									"",
+									"        {{#each data }}",
+									"        <tr>",
+									"            <td>{{username}}</td>",
+									"            <td>{{id}}</td>",
+									"        </tr>",
+									"        {{/each}}",
+									"    </table>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { \"data\": jsonData } )"
 								],
 								"type": "text/javascript"
 							}
