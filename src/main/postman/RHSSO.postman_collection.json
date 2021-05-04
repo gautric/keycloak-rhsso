@@ -6,6 +6,127 @@
 	},
 	"item": [
 		{
+			"name": "Realm Managment",
+			"item": [
+				{
+					"name": "Add Realm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"userRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"enabled\":true,\n    \"id\":\"{{realm_target}}\",\n    \"realm\":\"{{realm_target}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/admin/realms",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Realm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"userRandomId\", Math.floor(Math.random() * 1000));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/auth/admin/realms/{{realm_target}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"realms",
+								"{{realm_target}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "User Managment",
 			"item": [
 				{
